@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css"></link>
+<link rel="stylesheet" href="style.css"></link>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script>
+$(document).on('swipeleft swiperight', function (event) {
+ if(event.type == 'swiperight') {
+  var prevpage = '#' + $.mobile.activePage.prev('div[class="hint"]')[0].id;
+  $.mobile.changePage(prevpage, {
+   transition: 'slide',
+   reverse: true
+  });
+ }
+
+ if(event.type == 'swipeleft') {
+    var nextpage = '#' + $.mobile.activePage.next('div[class="hint"]')[0].id;
+        $.mobile.changePage(nextpage, {
+            transition: 'slide',
+            reverse: false
+        });
+    }
+});
+</script>
+
+<!-- On Loading -->
+<script type="text/javascript">
+/*
+$(document).on({
+    ajaxStart: function() { 
+        
+        var nextpage = '#loading'
+        $.mobile.changePage(nextpage, {
+            transition: 'slide',
+            reverse: false
+        });    
+        console.log('ajaxstart');
+    },
+    ajaxStop: function() {
+        $.mobile.changePage(curpage, {
+            transition: 'slide',
+            reverse: false
+        });
+        console.log('ajaxstop');
+    }    
+});
+*/
+</script>
+
+<script>
+// Send JSON to database
+
+/*
+$.ajax({
+    url: 'http://echo.jsontest.com/key/value/one/two',
+    type: 'POST',
+    data: JSON.stringify(arr),
+    contentType: 'application/json; charset=utf-8',
+    dataType: 'json',
+    async: false,
+    success: function(msg) {
+        alert(msg);
+    }
+});
+}
+*/
+</script>
+
+<!-- Get Hints  -->
+<script>
+$(document).ready(function(){
+    $("#newHint").click(function(){
+      $.getJSON("http://echo.jsontest.com/key/value/one/two",function(result){
+        $.each(result, function(i, field){ 
+            var newPage= $("<div data-role='page' class='hint' id='hint" + i + "'>" + field + "</div>");
+            newPage.appendTo( $.mobile.pageContainer );
+            //$.mobile.changePage( newPage );
+        });
+      });
+    }); 
+});
+</script>
+
+
+</head>
+
+<body>
+
+<!-- Front Page -->
+<div data-role="page" id="frontpage">
+    <div data-role="header">
+    </div><!--/header-->
+
+    <div role="banner" id="banner" class="ui-content">
+        <h1>Are you ready to</h1>
+             <img src="img/Cluego.gif" id="Mainlogo"/>
+    </div>
+
+    <div role="main" class="ui-content">
+        <a href="#creategame" class="ui-btn"><img src="img/CreateRace.png"/></a>
+        <a href="#joingame" class="ui-btn"><img src="img/JoinRace.png"/></a>
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+   <div data-role="footer"> <a href="#datasets">About ClueGo</a> </div>
+</div> 
+        
+<!-- Create Game -->
+<div data-role="page" id="creategame">
+    <div data-role="header">
+    </div><!--/header-->
+
+    <div role="banner" id="banner" class="ui-content">
+        <h1>Your Race!</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <label for="text-basic">Race name:</label>
+        <input name="text-basic" id="text-basic" value="" type="text"/>
+        <label for="slider">Radius:</label>
+        <input name="slider" id="slider" value="50" min="0" max="100" data-highlight="true" type="range"/>
+        <label for="date">Date:</label>
+        <input name="date" id="date" value="" type="date"/>
+        <label for="text-basic">Time:</label>
+        <input name="text-basic" id="text-basic" value="" type="text"/>
+        <fieldset data-role="controlgroup">
+            <legend>Questions:</legend>
+            <input name="checkbox-1a" id="checkbox-1a" checked="true" type="checkbox"/>
+            <label for="checkbox-1a">Historical</label>
+            <input name="checkbox-2a" id="checkbox-2a" type="checkbox"/>
+            <label for="checkbox-2a">Sports</label>
+            <input name="checkbox-3a" id="checkbox-3a" type="checkbox"/>
+            <label for="checkbox-3a">Culture</label>
+            <input name="checkbox-4a" id="checkbox-4a" type="checkbox"/>
+            <label for="checkbox-4a">Culinary</label>
+            <a href="#startGame" class="ui-btn"><img src="img/JoinRace.png"/></a>
+        </fieldset>
+    </div>
+
+    <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<!-- Start Game -->
+<div data-role="page" id="startGame">
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $("#timetocluego").click(function(){
+            $.mobile.changePage("#locationOne", {
+                transition: 'none',
+                reverse: false
+            });
+        });
+    });
+    </script>
+    <div data-role="header">
+    </div><!--/header-->
+
+    <div role="banner" id="banner" class="ui-content">
+        <h1>Now it's time to...</h1>
+    </div>
+
+
+    <div role="main" class="ui-content">
+        <button class="ui-btn" id="timetocluego"><img src="img/cluegopurp.gif"/></button>
+        <div id="cc">     </div>
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="datasets">
+  <div data-role="header">
+    </div><!--/header-->
+
+    <div role="banner" id="banner" class="ui-content">
+        <h1>Special thanks to our data set providers:</h1>
+    </div>  
+
+    <div role="main" class="ui-content">
+        <img src="img/sl.jpg" id="sllogo">
+        <br>
+        <br>
+        <img src="img/na.png" id="nalogo">
+        <br>
+        <br>
+        <img src="img/trove.gif" id="trove">
+        <br>
+        <img src="img/landgate.jpg" id="landgate">
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<!-- Join Game -->
+<div data-role="page" id="joingame">
+  <div data-role="header">
+        <h1>ClueGo</h1>
+    </div><!--/header-->
+
+    <div role="main" class="ui-content">    
+        <label for="raceID">Race ID:</label>
+        <input type="text" name="raceID" id="raceID"/>
+        <label for="raceID">Team Name:</label>
+        <input type="text" name="teamName" id="teamName"/>
+        <script> 
+        $(document).ready(function(){
+            $("#joinRace").click(function(){
+                $.mobile.changePage("#loading", {
+                    transition: 'none',
+                    reverse: false
+                });    
+            
+                $.ajax({"url":"data/joined.json", "dataType":"json", "mimeType":"application/json"}).done(function(data){
+                    console.log(data);
+                    
+                    if(data.joined == "joined") {
+                        $.mobile.changePage("#locationOne", {
+                            transition: 'none',
+                            reverse: false
+                        });
+                    }
+                    else {
+                        window.alert("Connecting to Race Failed. Try again");
+                        
+                        $.mobile.changePage("#joingame", {
+                            transition: 'none',
+                            reverse: false
+                        });
+                    }
+                });
+            });
+         });
+        </script>
+
+        <button class="ui-btn" id="joinRace"><img src="img/JoinRace.png"/></button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="locationOne">
+  <div data-role="header">
+  <h1><strong>Location</strong> One</h1>
+  <h1 class="clueNum"><strong>Clue</strong> One</h1>
+    <script> 
+        $(document).ready(function(){
+            $("#l1checkin").click(function(){
+                $.ajax({"url":"data/checkin.json", "dataType":"json", "mimeType":"application/json"}).done(function(data){
+                    console.log(data);
+                    
+                    if(data.status == "success") {
+                        $.mobile.changePage("#pageCorrectLocation", {
+                            transition: 'none',
+                            reverse: false
+                        });
+                    } else {
+                        window.alert("Connecting to Race Failed. Try again");
+                        
+                        $.mobile.changePage("#joingame", {
+                            transition: 'none',
+                            reverse: false
+                        });
+                    }
+                });
+            });
+            $("#l1newHint").click(function(){
+                $("#locOneHint").text("This famous building has been around longer than you... Probably");
+                $("#locationOne .clueNum").text("Clue Two");
+            });
+         });
+    </script>   
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+        <div id="locOneHint"><img src="img/dummyClue.png"/></div>
+        <button class="ui-btn" id="l1checkin"><img src="img/checkin.jpg"/></button>
+        <button class="ui-btn" id="l1newHint"><img src="img/Hint.jpg"/></button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="locationTwo">
+  <div data-role="header">
+  <h1>Location Two</h1>
+  <h1 class="clueNum">Clue One</h1>
+    <script> 
+        $(document).ready(function(){
+            $("#l2checkin").click(function(){
+                $.ajax({"url":"data/checkin.json", "dataType":"json", "mimeType":"application/json"}).done(function(data){
+                    console.log(data);
+                    
+                    if(data.status == "success") {
+                        $.mobile.changePage("#pageCorrectLocationTwo", {
+                            transition: 'none',
+                            reverse: false
+                        });
+                    } else {
+                        window.alert("Connecting to Race Failed. Try again");
+                        
+                        $.mobile.changePage("#joingame", {
+                            transition: 'none',
+                            reverse: false
+                        });
+                    }
+                });
+            });
+            $("#l2newHint").click(function(){
+                $("#locationTwo .hintbox").text("The address of this building is coming FROM INSIDE THE HOUSE");
+                $("#locationTwo .clueNum").text("Clue Two");
+            });
+         });
+    </script>   
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+
+        <div class="hintbox"><img src="img/clue2.jpg"/></div>
+        <button class="ui-btn" id="l2checkin"><img src="img/checkin.jpg"/></button>
+        <button class="ui-btn" id="l2newHint"><img src="img/Hint.jpg"/></button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="winner">
+  <div data-role="header">
+  <h1>Congratulations</h1>
+    <script> 
+        $(document).ready(function(){
+            $("#myJourney").click(function(){
+                $.mobile.changePage("#pageMyJourney", {
+                    transition: 'none',
+                    reverse: false
+                });
+            });
+         });
+    </script>   
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+        <p>
+            You Have Completed The Race :)
+        </p>
+        <hr />
+        <ul>
+            <li>Time: 45 minutes, 32 seconds!</li>
+            <li>Ranking: Second Place.</li>
+        </ul>
+        <button class="ui-btn" id="myJourney">View My Journey</button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+   <div data-role="footer"> <a href="#datasets">About ClueGo</a> </div>
+   
+</div>
+
+<div data-role="page" id="pageCorrectLocation">
+  <div data-role="header">
+  <h1>Well Done</h1>
+    <script> 
+        $(document).ready(function(){
+            $("#nextLocation").click(function(){
+                $.mobile.changePage("#locationTwo", {
+                    transition: 'none',
+                    reverse: false
+                });
+            });
+         });
+    </script>   
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+        
+        <button class="ui-btn" id="nextLocation">Next Location!</button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="pageCorrectLocationTwo">
+  <div data-role="header">
+  <h1>Well Done</h1>
+    <script> 
+        $(document).ready(function(){
+            $("#nextLocationTwo").click(function(){
+                $.mobile.changePage("#winner", {
+                    transition: 'none',
+                    reverse: false
+                });
+            });
+         });
+    </script>   
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+        
+        <button class="ui-btn" id="nextLocationTwo">Next Location!</button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="pageMyJourney">
+  <div data-role="header">
+  <h1>My Journey</h1>
+    <script> 
+        $(document).ready(function(){
+            $("#start").click(function(){
+                $.mobile.changePage("#frontpage", {
+                    transition: 'none',
+                    reverse: false
+                });
+            });
+         });
+    </script>   
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+        <div>
+            <h2>Location One</h2>
+            <p>Description of the location</p>
+            <img src="img/dummyClue.png">
+            <ul>
+                <li>Time: 23 minutes!</li>
+            </ul>
+            <hr />
+            <h2>Location Two</h2>
+            <p>Description of the location</p>
+            <img src="img/dummyClue.png">
+            <ul>
+                <li>Time: 22 minutes, 32 seconds!</li>
+            </ul>
+            <hr />
+
+        </div>
+        <button class="ui-btn" id="start">Finish</button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+<div data-role="page" id="extraHint">
+  <div data-role="header">
+  <h1>Lcoation One</h1>
+  <h1>Clue One</h1>
+        
+    </div><!--/header-->
+ 
+    <div role="main" class="ui-content">
+        <p>Are you sure <br/>you want an<br/> EXTRA HINT?</p>
+        <img src="img/dummyClue.png"/>
+        <button class="ui-btn" id="checkin"><img src="img/checkin.jpg"/></button>
+        <button class="ui-btn" id="newHint"><img src="img/Hint.jpg"/></button>
+        
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+
+<div data-role="page" id="loading">
+  <div data-role="header">
+  <h1>ClueGo</h1>
+        
+    </div><!--/header-->
+
+    <div role="main" class="ui-content">
+        loading......
+    </div><!-- /content -->
+
+   <div data-role="footer">
+        <a href="#frontpage"><img src="img/Cluego.gif" id="logo"></a>
+   </div>
+</div>
+
+</body>
+</html>
